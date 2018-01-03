@@ -5,6 +5,8 @@ let vm = new Vue({
 	data:{
 		cates: [],
 		items: [],
+		newParentCateTitle: '',
+		newChildCateTitle: '',
 		currentCateId: '',
 		editedItemId: '',
 		itemEditorShow: false,
@@ -12,6 +14,13 @@ let vm = new Vue({
 		itemEditor:{
 			show: false,
 			item: {},
+		},
+		contextmenu: {
+			cate: {
+				top: 0,
+				left: 0,
+				show: false,
+			}
 		},
 		overlay:{
 			show: false,
@@ -136,6 +145,11 @@ let vm = new Vue({
 			this.onItemEditorCancel()
 		},
 
+		onBodyClick: function(){
+			console.log('onBodyClick')
+			this.contextmenu.cate.show = false
+		},
+
 		onItemMouseDown(item, e){
 			mouse.item = item
 			mouse.itemStartTime = e.timeStamp
@@ -156,6 +170,57 @@ let vm = new Vue({
 			if(type=='onshelf'){
 				item.onShelf = !item.onShelf
 			}
+		},
+
+		onCateMouseUp(cate, e){
+			if(e.button==2){
+				console.log(e)
+				this.contextmenu.cate.show = true
+			}
+		},
+
+		onContextMenu(e){
+			let id = e.target.dataset.id
+			let pid = e.target.dataset.pid
+			let type = e.target.dataset.type
+			if(type=='cate'){
+				let cate = {}
+				if(pid==0){
+					for(let i in this.cates){
+						if(this.cates[i].id==id){
+							cate = this.cates[i]
+							break
+						}
+					}
+				} else {
+					for(let i in this.cates){
+						if(this.cates[i].id==pid){
+							for(let j in this.cates.children){
+								if(this.cates.children[j].id==id){
+									cate = this.cates.children[j]
+									break
+								}
+							}
+							break
+						}
+					}
+				}
+				let clientX = e.clientX
+				let clientY = e.clientY
+				this.contextmenu.cate.id = cate.id
+				this.contextmenu.cate.pid = cate.pid
+				this.contextmenu.cate.title = cate.title
+				this.contextmenu.cate.top = clientY + 'px'
+				this.contextmenu.cate.left = clientX + 'px'
+				this.contextmenu.cate.show = true	
+			}
+		},
+
+		onContextMenuClick(){
+		},
+
+		onAppClick(){
+			this.contextmenu.cate.show = false
 		}
 	}
 

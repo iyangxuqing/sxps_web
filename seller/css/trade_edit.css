@@ -31,10 +31,16 @@ img{
 .cate{
 	flex-shrink: 0;
 	padding-right: 15px;
+	cursor: pointer;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+
+.cate-new-title{
+	width: 80px;
+	border: none;
 }
 
 .items{
@@ -204,4 +210,36 @@ img{
 
 .overlay.show{
 	display: block;
+}
+
+.contextmenu{
+	position: absolute;
+	width: 140px;
+	padding: 5px 10px;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	background-color: #eee;
+}
+.contextmenu-input{
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 32px;
+	padding: 0 2px;
+	border: none;
+}
+
+.contextmenu-label{
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 28px;
+	padding: 0 2px;
+}
+
+.contextmenu-divider{
+	width: 100%;
+	height: 1px;
+	margin: 2px 0;
+	background-color: #fcfcfc;
 }

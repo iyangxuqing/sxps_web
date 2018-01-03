@@ -8,15 +8,19 @@
 	<link href="css/base.css" rel="stylesheet">
 	<link href="css/trade_edit.css" rel="stylesheet">
 </head>
-<body oncontextmenu="return !false">
-	<div id="app">
+<body oncontextmenu="return false">
+	<div id="app" @contextmenu="onContextMenu($event)" @click="onAppClick">
 		<div class="items-container">
 				<div class="cates">
 					<div class="cates-wrap">
-						<div class="cate" v-for="cate in cates" :class="{active: cate.active}" @click="onCateClick(cate)">{{cate.title}}</div>	
+						<div class="cate" v-for="cate in cates" :class="{active: cate.active}" @click="onCateClick(cate)" :data-type="'cate'" :data-id="cate.id" :data-pid="cate.pid">{{cate.title}}</div>
+						<!-- <div class="cate cate-new" @click="onCateClick({pid: 0})">新增</div> -->
+						<input class="cate-new-title" placeholder="新增" v-model="newParentCateTitle" data-pid="0" @blur="onNewCateBlur($event)" maxlength="6">			
 					</div>
 						<div class="cates-wrap" v-for="cate in cates" v-if="cate.active">
-							<div class="cate" v-for="child in cate.children" :class="{active: child.active}" @click="onCateClick(child)">{{child.title}}</div>
+							<div class="cate" v-for="child in cate.children" :class="{active: child.active}" @click="onCateClick(child)" :data-type="'cate'" :data-id="child.id" :data-pid="child.pid">{{child.title}}</div>
+							<!-- <div class="cate cate-new" @click="onCateClick({pid: cate.id})">新增</div>	-->
+							<input class="cate-new-title" placeholder="新增" v-model="newChildCateTitle" data-pid="cate.id" @blur="onNewCateBlur($event)" maxlength="6">
 						</div>
 				</div>
 				<div class="items">
@@ -65,6 +69,14 @@
 					<div class="item-editor-button confirm" @click="onItemEditorConfirm(itemEditor.item)">确 定</div>
 				</div>
 			</div>
+		</div>
+
+		<div class="contextmenu contextmenu-cate" @click.stop="onContextMenuClick" v-if="contextmenu.cate.show" :style="{top:contextmenu.cate.top, left:contextmenu.cate.left}">
+			<input class="contextmenu-input" placeholder="输入类别名称" v-model="contextmenu.cate.title">
+			<div class="contextmenu-label">前 移</div>
+			<div class="contextmenu-label">后 移</div>
+			<div class="contextmenu-divider"></div>
+			<div class="contextmenu-label">删 除</div>
 		</div>
 
 		<div class="overlay" :class="{show: overlay.show}" @click="onOverlayClick"></div>
