@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="IE=dege,chrom=1" http-equiv="X-UA-Compatible">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+	<title>订单编辑</title>
+	<link href="css/base.css" rel="stylesheet">
+	<link href="css/trade_edit.css" rel="stylesheet">
+</head>
+<body oncontextmenu="return !false">
+	<div id="app">
+		<div class="items-container">
+				<div class="cates">
+					<div class="cates-wrap">
+						<div class="cate" v-for="cate in cates" :class="{active: cate.active}" @click="onCateClick(cate)">{{cate.title}}</div>	
+					</div>
+						<div class="cates-wrap" v-for="cate in cates" v-if="cate.active">
+							<div class="cate" v-for="child in cate.children" :class="{active: child.active}" @click="onCateClick(child)">{{child.title}}</div>
+						</div>
+				</div>
+				<div class="items">
+					<div class="item" :class="{offshelf: !item.onShelf}" v-for="item in cateItems" @click="onItemClick(item, $event)" @mousedown="onItemMouseDown(item, $event)" @mouseup.stop.prevent="onItemMouseUp(item, $event)">
+						<div class="item-image"><img :src='item.images[0]'/></div>
+						<div class="item-title">{{item.title}}</div>
+						<div class="item-price">{{item.price | money}}</div>
+						<div class="editor" v-if="editedItemId==item.id">
+							<div class="editor-btn del" @click="onEditorBtn(item, 'del')" title="删除"><img src="img/icon/delete.png" alt=""></div>
+							<div class="editor-btn sortup" @click="onEditorBtn(item, 'sortup')" title="往前"><img src="img/icon/sortup.png" alt=""></div>
+							<div class="editor-btn sortdown" @click="onEditorBtn(item, 'sortdown')" title="往后"><img src="img/icon/sortup.png" alt=""></div>
+							<div class="editor-btn onshelf" @click="onEditorBtn(item, 'onshelf')"><p v-if="!item.onShelf">上</p><p v-else>下</p></div>
+						</div>
+					</div>
+				</div>
+		</div>
+
+		<div class="item-editor" :class="{show: itemEditor.show}">
+			<div class="item-editor-close" @click="onItemEditorCancel"><img src="img/icon/delete.png" alt=""></div>
+			<div class="item-editor-inner">
+				<div class="item-editor-info">
+					<div class="item-editor-image">
+						<img :src="itemEditor.item.images[0]" v-if="itemEditor.item.images">
+					</div>
+					<div class="item-editor-text">
+						<div class="item-editor-text-row">
+							<label class="item-editor-label">菜品名称</label>
+							<input class="item-editor-input" placeholder="输入菜品名称" v-model="itemEditor.item.title">
+						</div>
+						<div class="item-editor-text-row">
+							<label class="item-editor-label">附注说明</label>
+							<input class="item-editor-input" placeholder="输入附注说明" v-model="itemEditor.item.descs">
+						</div>
+						<div class="item-editor-text-row">
+							<label class="item-editor-label">今日价格</label>
+							<input class="item-editor-input" placeholder="输入价格" v-model="itemEditor.item.price">
+						</div>
+						<div class="item-editor-text-row">
+							<label class="item-editor-label">上架销售</label>
+							<input class="item-editor-checkbox" type="checkbox" v-model="itemEditor.item.onShelf">
+						</div>
+					</div>
+				</div>
+				<div class="item-editor-buttons">
+					<div class="item-editor-button cancel" @click="onItemEditorCancel">取 消</div>
+					<div class="item-editor-button confirm" @click="onItemEditorConfirm(itemEditor.item)">确 定</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="overlay" :class="{show: overlay.show}" @click="onOverlayClick"></div>
+
+	</div>
+	<script src="js/lib/vue.min.js"></script>
+	<script src="js/lib/vue-resource.js"></script>
+	<script src="js/trade_edit.js"></script>
+</body>
+</html>
