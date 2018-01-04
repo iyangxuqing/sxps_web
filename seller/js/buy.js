@@ -5,20 +5,15 @@ let vm = new Vue({
 	data:{
 		cates: [],
 		items: [],
+		search:{
+			input: '',
+			value: '',
+		},
 		currentCateId: '',
-		editedItemId: '',
-		itemEditorShow: false,
 		editedItem: {},
 		itemEditor:{
 			show: false,
 			item: {},
-		},
-		contextmenu: {
-			cate: {
-				top: 0,
-				left: 0,
-				show: false,
-			}
 		},
 		overlay:{
 			show: false,
@@ -75,19 +70,37 @@ let vm = new Vue({
 		}
 	},
 	computed:{
-		cateItems: function(){
+		listItems: function(){
+			let search = this.search.value
 			let cid = this.currentCateId
 			let items = this.items
 			let _items = []
-			for(let i in items){
-				if(items[i].cid==cid){
-					_items.push(items[i])
+			if(search){
+				for(let i in items){
+					if(items[i].title.indexOf(search)>-1){
+						_items.push(items[i])
+					}
+				}
+			} else {
+				for(let i in items){
+					if(items[i].cid==cid){
+						_items.push(items[i])
+					}
 				}
 			}
 			return _items
 		}
 	},
 	methods: {
+		onSearchCancel: function(e){
+			this.search.input = ''
+			this.search.value = ''
+		},
+		onSearch:function(){
+			this.search.value = this.search.input
+			console.log('onSearch', this.search.value)
+		},
+
 		onCateClick: function(cate){
 			let cates = this.cates
 			if(cate.pid==0){

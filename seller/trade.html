@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="IE=dege,chrom=1" http-equiv="X-UA-Compatible">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+	<title>订单</title>
+	<link href="css/base.css" rel="stylesheet">
+	<link href="css/trade.css" rel="stylesheet">
+</head>
+<body>
+	<div id="app">
+		<div class="items-container">
+			
+			<div class="search">
+				<div class="search-input">
+					<input class="search-input-value" placeholder="输入菜名进行搜索" v-model="search.input" @keyup.enter="onSearch">
+					<div class="search-input-cancel" v-if="search.input" @click="onSearchCancel"><img src="img/icon/delete.png"></div>
+				</div>
+				<div class="search-button" @click="onSearch">搜 索</div>
+			</div>
+	
+			<div class="trades">
+				<div class="trade" v-for="trade in trades">
+					<div class="trade-info">
+						<div class="trade-info-tid">订<i></i>单<i></i>号： {{trade.id}}</div>
+						<div class="trade-info-time">提交时间： {{trade.created}}</div>
+						<div class="trade-info-buyer">
+							<span class="trade-info-buyer-name">收<i></i>货<i></i>人： {{trade.receive_name}}</span>
+							<span class="trade-info-buyer-phone"><i></i>{{trade.receive_phone || trade.mobileNumber}}</span>
+						</div>
+						<div class="trade-info-address">收货地址： {{trade.receive_district + trade.receive_address}}</div>
+						<div class="trade-info-status">{{trade.status}}</div>
+					</div>
+					<div class="trade-orders">
+						<div class="order" v-for="order in trade.orders">
+							<div class="order-image"><img :src="order.image"></div>
+							<div class="order-text">
+								<div class="order-title">{{order.title}}</div>
+								<div class="order-descs gray">{{order.descs || order.title + '(500g)'}}</div>
+								<div class="order-message gray">{{order.message}}</div>
+							</div>
+							<div class="order-number">
+								<div class="order-price">{{order.price | money}}</div>
+								<div class="order-num" v-if="order.realNum===''">{{order.num}}</div>
+								<div class="order-realNum red">{{order.realNum}}<span class="gray"> ({{order.num}})</span></div>
+							</div>
+						</div>
+					</div>
+					<div class="trade-count">
+          <div class="trade-count-item" v-if="trade.status=='买家提交'">
+            <span class="trade-count-num">预订数量：{{trade.num | number}}</span>
+            <span class="trade-count-amount">金额：{{trade.amount | money}}</span>
+          </div>
+          <div class="trade-count-item" v-if="trade.status!='买家提交'">
+            <span class="trade-count-num">实发数量：{{trade.realNum | number}}</span>
+            <span class="trade-count-amount">金额：{{trade.realAmount | money}}</span>
+          </div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="overlay" :class="{show: overlay.show}" @click="onOverlayClick"></div>
+
+	</div>
+	<script src="js/lib/vue.min.js"></script>
+	<script src="js/lib/vue-resource.js"></script>
+	<script src="js/trade.js"></script>
+</body>
+</html>

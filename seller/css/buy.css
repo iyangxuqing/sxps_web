@@ -1,0 +1,301 @@
+.items-container{
+	width: 500px;
+	margin: 10px auto;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+div{
+	box-sizing: border-box;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+img{
+	width: 100%;
+	height: 100%;
+}
+
+.active{
+	color: red;
+}
+
+.search{
+	display: flex;
+	align-items: center;
+	height: 50px;
+	padding: 8px 10px;
+	background-color: #eee;
+}
+
+.search-input{
+	flex-grow: 1;
+	display: flex;
+	align-items: center;
+	height: 100%;
+	padding: 0 10px;
+	margin-right: 10px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	background-color: #fff;
+}
+
+.search-input-value{
+	flex-grow: 1;
+	padding: 5px 0;
+	border:none;
+}
+
+.search-input-cancel{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 18px;
+	height: 18px;
+	padding: 2px;
+	cursor: pointer;
+	margin-right: -2px;
+	border-radius: 50%;
+	border: 1px solid #666;
+	background-color: #fff;
+}
+
+.search-button{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100px;
+	height: 34px;
+	cursor: pointer;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	background-color: #eee;
+}
+
+.cates-wrap{
+	display: flex;
+	align-items: center;
+	height: 50px;
+	padding: 0 20px;
+	border-bottom: 1px solid #ddd;
+}
+
+.cate{
+	flex-shrink: 0;
+	padding-right: 15px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.cate-new-title{
+	width: 80px;
+	border: none;
+}
+
+.items{
+	display: flex;
+	flex-wrap: wrap;
+	width: 500px;
+	padding: 20px;
+}
+
+.item{
+	position: relative;
+	width: 140px;
+	height: 190px;
+	cursor: pointer;
+}
+
+.item:nth-of-type(3n+2){
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.item-image{
+	width: 140px;
+	height: 140px;
+}
+
+.item-title{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.item-price{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: red;
+}
+
+.offshelf .item-title, .offshelf .item-price{
+	text-decoration: line-through;
+	text-decoration-color: red;
+}
+
+.editor{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 25px;
+	height: 100px;
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+.editor-btn{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 25px;
+	height: 25px;
+	padding: 4px;
+	cursor: pointer;
+	color: #666;
+}
+
+.editor-btn + .editor-btn{
+	border-top: 1px solid #ccc;
+}
+
+.editor-btn.sortdown img{
+	transform: rotate(180deg);
+}
+
+.item-editor{
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 1001;
+	width: 500px;
+	height: 300px;
+	transform: translate(-50%, -50%);
+	padding: 20px;
+	background-color: #fff;
+}
+
+.item-editor.show{
+	display: block;
+}
+
+.item-editor-close{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 30px;
+	height: 30px;
+	padding: 6px;
+	cursor: pointer;
+}
+
+.item-editor-info{
+	display: flex;
+	align-items: center;
+}
+
+.item-editor-image{
+	flex-shrink: 0;
+	width: 200px;
+	height: 200px;
+	border: 1px solid #ddd;
+}
+
+.item-editor-text{
+	flex-grow: 1;
+	margin-left: 20px;
+}
+
+.item-editor-text-row{
+	display: flex;
+	align-items: center;
+	height: 44px;
+}
+
+.item-editor-label{
+	flex-shrink: 0;
+	margin-right: 10px;
+}
+
+.item-editor-input{
+	flex-grow: 1;
+	padding: 6px;
+}
+
+.item-editor-buttons{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 20px;
+}
+
+.item-editor-button{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 200px;
+	height: 40px;
+	cursor: pointer;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+}
+
+.item-editor-button.confirm{
+	color: #fff;
+	background-color: #393;
+	border: 0px solid #ddd;
+}
+
+.overlay{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1000;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.overlay.show{
+	display: block;
+}
+
+.contextmenu{
+	position: absolute;
+	width: 140px;
+	padding: 5px 10px;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	background-color: #eee;
+}
+.contextmenu-input{
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 32px;
+	padding: 0 2px;
+	border: none;
+}
+
+.contextmenu-label{
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 28px;
+	padding: 0 2px;
+}
+
+.contextmenu-divider{
+	width: 100%;
+	height: 1px;
+	margin: 2px 0;
+	background-color: #fcfcfc;
+}
